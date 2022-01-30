@@ -7,7 +7,7 @@ react:"^17.0.2"
 ### Packages used
 
 - Ant design
-- React Bootstap
+- React Bootstrap
 - Redux
 - React Router
 - Styled component
