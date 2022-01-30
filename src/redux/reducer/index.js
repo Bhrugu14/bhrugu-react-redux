@@ -4,7 +4,7 @@ const initialData = {
   productsListData: [],
   categoriesData: [],
 };
-const AntDesignReducer = (state = initialData, action) => {
+const allReducers = (state = initialData, action) => {
   switch (action.type) {
     case "GET_PRODUCT": {
       const { data } = action.payload;
@@ -26,6 +26,6 @@ const AntDesignReducer = (state = initialData, action) => {
 };
 
 const rootReducer = combineReducers({
-  AntDesignReducer,
+  allReducers,
 });
 export default rootReducer;

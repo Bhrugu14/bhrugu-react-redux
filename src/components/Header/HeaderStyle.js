@@ -16,6 +16,11 @@ const HeaderStyle = styled.div`
     font-weight: bold;
     color: white;
   }
+  .backButton {
+    height: 30px;
+    width: 40px;
+    color: #ffffff;
+  }
 `;
 
 export default HeaderStyle;

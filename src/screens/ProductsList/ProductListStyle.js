@@ -4,12 +4,12 @@ const ProductListStyle = styled.div`
   display: flex;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.1);
-  min-height: 94vh;
+  min-height: calc(100vh - max(6vh, 50px));
   .productsContainer {
     display: flex;
     flex-direction: column;
     width: 90%;
-    min-height: 94vh;
+    min-height: calc(100vh - max(6vh, 50px));
     background-color: rgba(255, 255, 255, 1);
   }
   .productHeader {
@@ -26,9 +26,8 @@ const ProductListStyle = styled.div`
     margin-right: 15px;
   }
   .productsCardContainer {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
+    padding-left: 1%;
+    padding-right: 1%;
   }
   .toggleButton:focus {
     color: #fff;
@@ -36,6 +35,9 @@ const ProductListStyle = styled.div`
     border-color: transparent;
     outline: transparent !important;
     box-shadow: 0 transparent !important;
+  }
+  .toggleButton:focus:not(:focus-visible) {
+    box-shadow: none !important;
   }
   .toggleButton {
     background-color: transparent !important;
@@ -58,9 +60,9 @@ const ProductListStyle = styled.div`
     padding: 0px !important;
     background-color: transparent !important;
     box-shadow: 0 transparent !important;
+    border-radius: 10% !important;
   }
   .dropdownItem {
-    font-family: Avenir-Regular !important;
     font-style: normal;
     font-weight: 800;
     font-size: 14px;
@@ -73,23 +75,29 @@ const ProductListStyle = styled.div`
     padding-right: 13px;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: rgba(250, 250, 250, 1);
   }
   .dropdownItem:focus,
   .dropdownItem:hover {
     color: transparent !important;
-    background-color: #edc9b8 !important;
     color: #020202 !important;
-    background-color: #e48759 !important;
   }
   .dropdownItem.active,
   .dropdownItem:active {
-    color: #edc9b8 !important;
     text-decoration: none !important;
-    background-color: #e48759 !important;
     color: #020202 !important;
     border: 0px !important;
     outline: 0px !important;
+  }
+  .skeletonImage {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    height: 300px;
+  }
+  .skeletonDis {
+    height: 100px;
+    width: 100%;
   }
 `;
 

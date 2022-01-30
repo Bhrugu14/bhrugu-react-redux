@@ -1,4 +1,6 @@
 import Config from "../../constant";
+
+//products
 export const GetProductsList = (productId) => async (dispatch) => {
   let url = `${Config.BASE_URL}/products`;
   if (productId) {
@@ -25,6 +27,7 @@ export const GetProductsList = (productId) => async (dispatch) => {
   return response;
 };
 
+//categories
 export const GetCategories = () => async (dispatch) => {
   const options = {
     method: "GET",

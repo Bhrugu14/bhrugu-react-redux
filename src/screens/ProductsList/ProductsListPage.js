@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import ProductCard from "../../components/ProductCard/ProductCardComponent";
 import { useHistory } from "react-router-dom";
-import { GetProductsList, GetCategories } from "../../redux/action";
 import { useDispatch } from "react-redux";
+import { Dropdown, Col, Row } from "react-bootstrap";
+import { Skeleton } from "antd";
+
+import ProductCard from "../../components/ProductCard/ProductCardComponent";
+import { ProductsListStrings } from "../../constant/strings";
+import { GetProductsList, GetCategories } from "../../redux/action";
 import demo2 from "../../assets/images/demo_image2.webp";
+
 import ProductListStyle from "./ProductListStyle";
 
 function ProductsList() {
-  const histroy = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const [categoryId, setCategoryId] = useState(-1);
   const [products, setProducts] = useState();
@@ -22,13 +26,11 @@ function ProductsList() {
       i.image = demo2;
       return i;
     });
-    console.log("GetProductsList", newData);
     setProducts(newData);
   };
 
   const fetchCategories = async () => {
     const res = await dispatch(GetCategories());
-    console.log("GetCategories", res);
     const newData = [{ id: -1, name: "all" }].concat(res);
     setDropdownData(newData);
   };
@@ -38,7 +40,6 @@ function ProductsList() {
   }, []);
 
   const onSelectCategory = (category) => {
-    console.log("CATEGORY", category);
     setSelectedCategory(category.name);
     setCategoryId(category.id);
   };
@@ -47,7 +48,11 @@ function ProductsList() {
     <ProductListStyle>
       <div className={"productsContainer"}>
         <div className={"productHeader"}>
-          <label className={"productHeaderText"}>Select Category:</label>
+          {dropdownData && (
+            <label className={"productHeaderText"}>
+              {ProductsListStrings.selectCategory}:
+            </label>
+          )}
           {dropdownData && (
             <Dropdown>
               <Dropdown.Toggle className={"toggleButton"}>
@@ -74,28 +79,48 @@ function ProductsList() {
           )}
         </div>
         <div className={"productsCardContainer"}>
-          {products &&
-            products.map((item, k) => {
-              if (categoryId === -1) {
-                return (
-                  <ProductCard
-                    onClick={() => histroy.push(`product/${item.id}`)}
-                    item={item}
-                  />
-                );
-              } else {
-                if (categoryId === item.categoryId) {
-                  return (
-                    <ProductCard
-                      onClick={() => histroy.push(`product/${item.id}`)}
-                      item={item}
+          <Row xs={1} md={1} sm={1} lg={1}>
+            {products
+              ? products.map((item, k) => {
+                  if (categoryId === -1) {
+                    return (
+                      <Col key={"product" + k} xs={12} sm={6} md={4} x lg={4}>
+                        <ProductCard
+                          onClick={() => history.push(`product/${item.id}`)}
+                          item={item}
+                        />
+                      </Col>
+                    );
+                  } else {
+                    if (categoryId === item.categoryId) {
+                      return (
+                        <Col key={"product" + k} xs={12} sm={6} md={4} x lg={4}>
+                          <ProductCard
+                            onClick={() => history.push(`product/${item.id}`)}
+                            item={item}
+                          />
+                        </Col>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                })
+              : [...Array(3)].map((i, k) => (
+                  <Col key={"product" + k} xs={12} sm={6} md={4} x lg={4}>
+                    <Skeleton.Image block={true} className={"skeletonImage"} />
+                    <Skeleton.Button
+                      active={true}
+                      size={"default"}
+                      shape={"default"}
+                      className={"skeletonDis"}
+                      block={true}
                     />
-                  );
-                } else {
-                  return null;
-                }
-              }
-            })}
+                    <br />
+                    <br />
+                  </Col>
+                ))}
+          </Row>
         </div>
       </div>
     </ProductListStyle>
