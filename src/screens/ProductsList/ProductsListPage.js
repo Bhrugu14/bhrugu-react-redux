@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Dropdown, Col, Row } from "react-bootstrap";
 import { Skeleton } from "antd";
+import { motion } from "framer-motion";
 
 import ProductCard from "../../components/ProductCard/ProductCardComponent";
 import { ProductsListStrings } from "../../constant/strings";
@@ -85,10 +86,12 @@ function ProductsList() {
                   if (categoryId === -1) {
                     return (
                       <Col key={"product" + k} xs={12} sm={6} md={4} x lg={4}>
+                      <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
                         <ProductCard
                           onClick={() => history.push(`product/${item.id}`)}
                           item={item}
                         />
+                      </motion.div>
                       </Col>
                     );
                   } else {
